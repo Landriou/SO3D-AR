@@ -1,10 +1,9 @@
+from Entorno import Entorno
 from Domain.objeto import Objeto
 from graficador import Graficador
 
 
-graf = Graficador()
 
-#obje = Objeto(3,3,3,2,2,2)
 #A
 obje1= Objeto(1,1,1,2,2,2)
 #B
@@ -21,20 +20,13 @@ obje6= Objeto(7,8,6.5,1,1,3)
 obje7= Objeto(2,4,3.5,1,1,1)
 #H
 obje8= Objeto(2,7,3.5,1,1,1)
-
 #I
 obje9= Objeto(2,6,5.5,2,5,3)
 #J
 obje10= Objeto(2,4,7.5,1,1,1)
 
-graf.graficar(obje1, 'b')
-graf.graficar(obje2, 'r')
-graf.graficar(obje3, 'g')
-graf.graficar(obje4, 'b')
-graf.graficar(obje5, 'b')
-graf.graficar(obje6, 'b')
-graf.graficar(obje7, 'r')
-graf.graficar(obje8, 'g')
-graf.graficar(obje9, 'b')
-graf.graficar(obje10, 'b')
-graf.show()
+
+objetos = [obje1, obje2, obje3, obje4, obje5, obje6, obje7, obje8, obje9, obje10]
+ent = Entorno(objetos)
+ent.iniciar()
+
