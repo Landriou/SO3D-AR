@@ -16,9 +16,7 @@ class Graficador:
        
         for i in range(len(objeto.vecStartX)):
             self.ax.plot([objeto.vecStartX[i], objeto.vecEndX[i]], [objeto.vecStartY[i], objeto.vecEndY[i]],zs = [objeto.vecStartZ[i], objeto.vecEndZ[i]], color = color)
-        #self.ax1.scatter(objeto.puntosX, objeto.puntosY, objeto.puntosZ, c=color)
 
-        #ax1.scatter(data, c ='r', marker='o')
     def show(self):
         plt.show()
    

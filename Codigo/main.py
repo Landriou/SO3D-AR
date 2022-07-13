@@ -27,6 +27,6 @@ obje10= Objeto(2,4,7.5,1,1,1)
 
 
 objetos = [obje1, obje2, obje3, obje4, obje5, obje6, obje7, obje8, obje9, obje10]
-ent = Entorno(objetos)
+ent = Entorno()
 ent.iniciar()
 

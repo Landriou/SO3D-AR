@@ -23,6 +23,9 @@ class Objeto:
         
         self.vecStartZ = []
         self.vecEndZ = []
+        self.punto1 = ()
+        self.punto7 = ()
+        
         self.obtenerCoordenadasCompletas()
     
     def obtenerCoordenadasCompletas(self):
@@ -68,7 +71,8 @@ class Objeto:
         punto8Y = self.y - self.ancho/2
         punto8Z = self.z + self.alto/2
 
-
+        self.punto1 = (punto1X, punto1Y, punto1Z)
+        self.punto7 = (punto7X, punto7Y, punto7Z)
         #Vectores
         #Base izquierda
         self.vecStartX.append(punto1X)
@@ -178,4 +182,4 @@ class Objeto:
         
         self.vecEndX.append(punto8X)
         self.vecEndY.append(punto8Y)
-        self.vecEndZ.append(punto8Z)
+        self.vecEndZ.append(punto8Z)    
