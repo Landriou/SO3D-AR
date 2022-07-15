@@ -3,14 +3,30 @@ from random import randint, triangular, uniform
 
 class AgenteGenetico:
      
-    def __init__(self, maxTryStates, env):
+    def __init__(self, maxTryStates, env, obj):
         self.maxTryStates = maxTryStates
         self.env = env
         self.envMaximoLocal = None
+        self.obj = obj
         
     #En base a un objeto, genera muchos entornos con el objeto en posiciones aleatorias
     def obtenerPoblaciones(self):
-        print("hola")
+        population = []
+
+        while len(population) < 20:
+            new_obj = copy.deepcopy(self.obj)
+            new
+            rand_i = randint(0, self.env.j - 1)
+            rand_j = randint(0, self.env.i - 1)
+            rand_k = randint(0, self.env.k - 1)
+            new_obj.i = rand_i
+            new_obj.j = rand_j
+            new_obj.k = rand_k
+
+            if self.env.validarPosicionVacia(new_obj):
+                population.append(new_obj)
+
+
         
     # Valida que una posicion de un objeto no interfiere con los demas objetos
     # - El objeto debe estar sobre una superficie
