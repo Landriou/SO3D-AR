@@ -13,7 +13,7 @@ Estas reglas son las mas basicas que se preveen, sin embargo el sistema seria es
 # Parametros de como queremos que quede
 - Mientras mas grande la superficie donde este apoyado mejor
 - Mientras mas distancia tenga de otros objetos mejor
-- Mientras mas distancia haya frente a otro objeto arriba mejor
+- Mientras mas distancia haya frente a otro objeto desde arriba mejor
 - Mientras mas cercano este al punto dado mejor
 
 # Parametros del objeto
