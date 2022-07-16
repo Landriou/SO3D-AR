@@ -35,3 +35,10 @@ class Entorno:
                 for j in range(objeto.punto1[1]*2, objeto.punto2[1]*2):
                     for k in range(objeto.punto1[2]*2, objeto.punto2[2]*2):
                         self.espacio[i,j,k] = "1"
+
+    def validarBase(self, coordX, coordY, coordZ):
+        if coordX < 0 or coordX >= self.i or coordY < 0 or coordY >= self.j or coordZ < 0 or coordZ >= self.k:
+            return False
+        
+        if self.espacio[coordX-1, coordY-1, coordZ-1] == "0":
+            return False

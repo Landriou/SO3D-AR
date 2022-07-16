@@ -29,7 +29,7 @@ class Objeto:
         self.obtenerCoordenadasCompletas()
     
     def obtenerCoordenadasCompletas(self):
-        #Primer punto
+        #Primer punto ()
         punto1X = self.x - self.largo/2
         punto1Y = self.y - self.ancho/2
         punto1Z = self.z - self.alto/2
@@ -148,7 +148,7 @@ class Objeto:
         self.vecEndY.append(punto7Y)
         self.vecEndZ.append(punto7Z)
         
-        #Superior Derecha
+        #Superior Izquierda
         self.vecStartX.append(punto6X)
         self.vecStartY.append(punto6Y)
         self.vecStartZ.append(punto6Z)
@@ -157,7 +157,7 @@ class Objeto:
         self.vecEndY.append(punto5Y)
         self.vecEndZ.append(punto5Z)
         
-        #Superior Izquierda
+        #Superior Derecha
         self.vecStartX.append(punto7X)
         self.vecStartY.append(punto7Y)
         self.vecStartZ.append(punto7Z)

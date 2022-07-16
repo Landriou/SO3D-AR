@@ -9,7 +9,7 @@ class AgenteGenetico:
         self.envMaximoLocal = None
         self.obj = obj
         
-    #En base a un objeto, genera muchos entornos con el objeto en posiciones aleatorias
+    #En base a un objeto, genera muchos posibles entornos
     def obtenerPoblaciones(self):
         population = []
 
@@ -24,19 +24,47 @@ class AgenteGenetico:
             new_obj.k = rand_k
 
             if self.env.validarPosicionVacia(new_obj):
-                population.append(new_obj)
+                if self.validarPosiciones():
+                    population.append(new_obj)
+        
 
 
         
     # Valida que una posicion de un objeto no interfiere con los demas objetos
     # - El objeto debe estar sobre una superficie
     # - La superficie debe ser mayor o igual a las dimensiones de la base del objeto
-    # - Que el alto quepa en el area
-    # - Que el ancho quepa en el area
-    # - El objeto no se debe superponer(traspasar) con otro objeto
     def validarPosiciones(self):
-        print("hola")
+        puntoX = []
+        puntoY = []
+        puntoZ = []
+
+        #Primer punto ()
+        puntoX.append(self.obj.x - self.largo/2)
+        puntoY.append(self.obj.y - self.ancho/2)
+        puntoZ.append(self.obj.z - self.alto/2)
+
+        #Segundo punto
+        puntoX.append(self.obj.x - self.largo/2)
+        puntoY.append(self.obj.y + self.ancho/2)
+        puntoZ.append(self.obj.z - self.alto/2)
+
+        #Tercer punto
+        puntoX.append(self.obj.x + self.largo/2)
+        puntoY.append(self.obj.y + self.ancho/2)
+        puntoZ.append(self.obj.z - self.alto/2)
+
+        #Cuarto punto
+        puntoX.append(self.obj.x + self.largo/2)
+        puntoY.append(self.obj.y - self.ancho/2)
+        puntoZ.append(self.obj.z - self.alto/2)
+
+        # Valido base de apoyo para el objeto en el punto 1
+        for i in range(4):
+            if self.env.validarBase(puntoX[i], puntoY[i], puntoZ[i]) == False:
+                return False
         
+        return True
+
     # Genera nuevos entornos? despues de validar las pociciones nuevas, deberia copiar los entornos
     # o resolverlo de otra forma
     def nuevoEntornos(self):
