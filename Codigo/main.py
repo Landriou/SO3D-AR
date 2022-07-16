@@ -1,6 +1,7 @@
 from Entorno import Entorno
 from Domain.objeto import Objeto
 from graficador import Graficador
+from AgenteGenetico import AgenteGenetico
 
 
 
@@ -28,5 +29,14 @@ obje10= Objeto(2,4,7.5,1,1,1)
 
 objetos = [obje1, obje2, obje3, obje4, obje5, obje6, obje7, obje8, obje9, obje10]
 ent = Entorno()
-ent.iniciar()
+ent.objetos = objetos
+# ent.iniciar()
 
+objeto_test = Objeto(1,1,1,2,2,2)
+agente = AgenteGenetico(10, ent, objeto_test)
+poblacion = agente.generarPoblacions()
+for i in range(len(poblacion)):
+    print(poblacion[i].x)
+    print(poblacion[i].y)
+    print(poblacion[i].z)
+    print("\n")

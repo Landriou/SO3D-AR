@@ -1,4 +1,6 @@
 from random import randint, triangular, uniform
+from Domain.objeto import Objeto
+import copy
 
 
 class AgenteGenetico:
@@ -10,22 +12,21 @@ class AgenteGenetico:
         self.obj = obj
         
     #En base a un objeto, genera muchos posibles entornos
-    def obtenerPoblaciones(self):
+    def generarPoblacions(self):
         population = []
 
         while len(population) < 20:
-            new_obj = copy.deepcopy(self.obj)
-            new
-            rand_i = randint(0, self.env.j - 1)
-            rand_j = randint(0, self.env.i - 1)
-            rand_k = randint(0, self.env.k - 1)
-            new_obj.i = rand_i
-            new_obj.j = rand_j
-            new_obj.k = rand_k
+
+            rand_i = randint(0, (self.env.i / 2) - 1)
+            rand_j = randint(0, (self.env.j / 2) - 1)
+            rand_k = randint(0, (self.env.k / 2) - 1)
+            new_obj = Objeto(rand_i, rand_j, rand_k, self.obj.largo, self.obj.ancho, self.obj.alto)
 
             if self.env.validarPosicionVacia(new_obj):
                 if self.validarPosiciones():
                     population.append(new_obj)
+        
+        return population
         
 
 
@@ -39,28 +40,28 @@ class AgenteGenetico:
         puntoZ = []
 
         #Primer punto ()
-        puntoX.append(self.obj.x - self.largo/2)
-        puntoY.append(self.obj.y - self.ancho/2)
-        puntoZ.append(self.obj.z - self.alto/2)
+        puntoX.append(self.obj.x - self.obj.largo/2)
+        puntoY.append(self.obj.y - self.obj.ancho/2)
+        puntoZ.append(self.obj.z - self.obj.alto/2)
 
         #Segundo punto
-        puntoX.append(self.obj.x - self.largo/2)
-        puntoY.append(self.obj.y + self.ancho/2)
-        puntoZ.append(self.obj.z - self.alto/2)
+        puntoX.append(self.obj.x - self.obj.largo/2)
+        puntoY.append(self.obj.y + self.obj.ancho/2)
+        puntoZ.append(self.obj.z - self.obj.alto/2)
 
         #Tercer punto
-        puntoX.append(self.obj.x + self.largo/2)
-        puntoY.append(self.obj.y + self.ancho/2)
-        puntoZ.append(self.obj.z - self.alto/2)
+        puntoX.append(self.obj.x + self.obj.largo/2)
+        puntoY.append(self.obj.y + self.obj.ancho/2)
+        puntoZ.append(self.obj.z - self.obj.alto/2)
 
         #Cuarto punto
-        puntoX.append(self.obj.x + self.largo/2)
-        puntoY.append(self.obj.y - self.ancho/2)
-        puntoZ.append(self.obj.z - self.alto/2)
+        puntoX.append(self.obj.x + self.obj.largo/2)
+        puntoY.append(self.obj.y - self.obj.ancho/2)
+        puntoZ.append(self.obj.z - self.obj.alto/2)
 
         # Valido base de apoyo para el objeto en el punto 1
         for i in range(4):
-            if self.env.validarBase(puntoX[i], puntoY[i], puntoZ[i]) == False:
+            if self.env.validarBase(int(puntoX[i]), int(puntoY[i]), int(puntoZ[i])) == False:
                 return False
         
         return True
