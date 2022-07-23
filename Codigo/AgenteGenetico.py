@@ -12,7 +12,7 @@ class AgenteGenetico:
         self.obj = obj
         
     #En base a un objeto, genera muchos posibles entornos
-    def generarPoblacions(self):
+    def generarPoblacion(self):
         population = []
 
         while len(population) < 20:
@@ -23,7 +23,8 @@ class AgenteGenetico:
             new_obj = Objeto(rand_i, rand_j, rand_k, self.obj.largo, self.obj.ancho, self.obj.alto)
 
             if self.env.validarPosicionVacia(new_obj):
-                if self.validarPosiciones():
+                if self.validarPosiciones(new_obj):
+                    # CALCULAR EL FITNESS DEL OBJETO
                     population.append(new_obj)
         
         self.population = population
@@ -34,30 +35,30 @@ class AgenteGenetico:
     # Valida que una posicion de un objeto no interfiere con los demas objetos
     # - El objeto debe estar sobre una superficie
     # - La superficie debe ser mayor o igual a las dimensiones de la base del objeto
-    def validarPosiciones(self):
+    def validarPosiciones(self, obj):
         puntoX = []
         puntoY = []
         puntoZ = []
 
         #Primer punto ()
-        puntoX.append(self.obj.x - self.obj.largo/2)
-        puntoY.append(self.obj.y - self.obj.ancho/2)
-        puntoZ.append(self.obj.z - self.obj.alto/2)
+        puntoX.append(obj.x - self.obj.largo/2)
+        puntoY.append(obj.y - self.obj.ancho/2)
+        puntoZ.append(obj.z - self.obj.alto/2)
 
         #Segundo punto
-        puntoX.append(self.obj.x - self.obj.largo/2)
-        puntoY.append(self.obj.y + self.obj.ancho/2)
-        puntoZ.append(self.obj.z - self.obj.alto/2)
+        puntoX.append(obj.x - self.obj.largo/2)
+        puntoY.append(obj.y + self.obj.ancho/2)
+        puntoZ.append(obj.z - self.obj.alto/2)
 
         #Tercer punto
-        puntoX.append(self.obj.x + self.obj.largo/2)
-        puntoY.append(self.obj.y + self.obj.ancho/2)
-        puntoZ.append(self.obj.z - self.obj.alto/2)
+        puntoX.append(obj.x + self.obj.largo/2)
+        puntoY.append(obj.y + self.obj.ancho/2)
+        puntoZ.append(obj.z - self.obj.alto/2)
 
         #Cuarto punto
-        puntoX.append(self.obj.x + self.obj.largo/2)
-        puntoY.append(self.obj.y - self.obj.ancho/2)
-        puntoZ.append(self.obj.z - self.obj.alto/2)
+        puntoX.append(obj.x + self.obj.largo/2)
+        puntoY.append(obj.y - self.obj.ancho/2)
+        puntoZ.append(obj.z - self.obj.alto/2)
 
         # Valido base de apoyo para el objeto en el punto 1
         for i in range(4):
@@ -66,11 +67,6 @@ class AgenteGenetico:
         
         return True
 
-    # Genera nuevos entornos? despues de validar las pociciones nuevas, deberia copiar los entornos
-    # o resolverlo de otra forma
-    def nuevoEntornos(self):
-        print("hola")
-        
     # Calcula el fitness de un entorno en particular
     def calcularFitness(self):
         print("hola")
@@ -84,8 +80,6 @@ class AgenteGenetico:
         for i in range(2):
             value = random.choice(posibilidades)
             posibilidades.remove(value)
-            print("vuelta: ", i )
-            print(value)
             if value == "x":
                 holder = new_ind_1.x
                 new_ind_1.x = new_ind_2.x
@@ -121,19 +115,58 @@ class AgenteGenetico:
         
     # Resuelve toda la logica del algoritmo genetico, aca deberia ir todo el codigo llamadp
     def startGenetico(self):
-        
-       for i in range(self.maxTryStates):
-           
-           #Nueva poblacion
-           
-           #Matar a los debiles
-           
-           #While
-           #seleccionar a los mejores
-           #cruzarlos
-           #mutarlos
-           #calcular el fitness
-           #guardar el mejor caso
-           
-           # dar otra iteracion con la nueva poblacion
-           print("hola")
+        #Nueva poblacion
+        self.generarPoblacion()
+
+        # Iteramos hasta que se cumpla el numero de intentos
+        for i in range(self.maxTryStates):
+            new_population = []
+            while len(self.population) > 1:
+                # Seleccionamos 2 individuos
+                ind_1 = random.choice(self.population)
+                self.population.remove(ind_1)
+                ind_2 = random.choice(self.population)
+                self.population.remove(ind_2)
+
+                hijo_1, hijo_2 = self.cruzamiento(ind_1, ind_2)
+
+                # Mutamos el hijo 1
+                hijo_1 = self.mutacion(hijo_1)
+
+                # Validamos y guardamos hijo1
+                if self.env.validarPosicionVacia(hijo_1):
+                    if self.validarPosiciones(hijo_1):
+                        # CALCULAR EL FITNESS DEL OBJETO
+                        new_population.append(new_obj)
+
+                # Mutamos el hijo 2
+                hijo_2 = self.mutacion(hijo_2)
+
+                # Validamos y guardamos hijo2
+                if self.env.validarPosicionVacia(hijo_2):
+                    if self.validarPosiciones(hijo_2):
+                        # CALCULAR EL FITNESS DEL OBJETO
+                        new_population.append(new_obj)
+
+
+                # Guardamos a los padres
+                self.population.append(ind_1)
+                self.population.append(ind_2)
+
+            # Guardamos si sobro un objeto
+            if len(self.population) > 0:
+                new_population.append(self.population[0])
+                self.population.remove(self.population[0])
+
+
+                
+            # Eliminamos X cantidad de los peores individuos de la nueva poblacion
+
+
+
+            # Guardamos al mejor individuo de la nueva poblacion
+
+            self.population = new_population
+
+
+            

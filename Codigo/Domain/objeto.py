@@ -7,6 +7,7 @@ class Objeto:
     alto = 0
     ancho = 0
     largo = 0
+    fitness = 0
 
     def __init__(self, x, y, z,largo, ancho, alto):
         self.x = x
