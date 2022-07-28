@@ -19,6 +19,8 @@ class Entorno:
         graficador = Graficador()
         for i in range(len(self.objetos)):
             color = 'b' if i % 2 == 0 else 'r'
+            if i == len(self.objetos) - 1:
+                color = 'g'
             graficador.graficar(self.objetos[i], color)
         graficador.show()
         
@@ -31,7 +33,7 @@ class Entorno:
         for i in range(int(objeto.punto1[0]*2), int(objeto.punto7[0]*2)):
             for j in range(int(objeto.punto1[1]*2), int(objeto.punto7[1]*2)):
                 for k in range(int(objeto.punto1[2]*2), int(objeto.punto7[2]*2)):
-                    if self.espacio[i,j,k] == "1":
+                    if self.espacio[i,j,k] == 1:
                         return False
         return True
                         
@@ -40,11 +42,13 @@ class Entorno:
          for i in range(int(objeto.punto1[0]*2), int(objeto.punto7[0]*2)):
                 for j in range(int(objeto.punto1[1]*2), int(objeto.punto7[1]*2)):
                     for k in range(int(objeto.punto1[2]*2), int(objeto.punto7[2]*2)):
-                        self.espacio[i,j,k] = "1"
+                        self.espacio[i,j,k] = 1
 
     def validarBase(self, coordX, coordY, coordZ):
         if (coordX * 2) < 0 or (coordX * 2) >= self.i or (coordY * 2) < 0 or (coordY * 2) >= self.j or (coordZ * 2) < 0 or (coordZ * 2) >= self.k:
             return False
         
-        if self.espacio[coordX-1, coordY-1, coordZ-1] == "0":
+        if self.espacio[(coordX*2) - 1, (coordY*2)-1, (coordZ*2)-1] != 1:
             return False
+        
+        return True

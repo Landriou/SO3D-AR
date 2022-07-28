@@ -10,6 +10,7 @@ class AgenteGenetico:
         self.env = env
         self.envMaximoLocal = None
         self.obj = obj
+        self.bestOption = None
         
     #En base a un objeto, genera muchos posibles entornos
     def generarPoblacion(self):
@@ -20,12 +21,11 @@ class AgenteGenetico:
             rand_i = random.randint(0, (self.env.i / 2) - 1)
             rand_j = random.randint(0, (self.env.j / 2) - 1)
             rand_k = random.randint(0, (self.env.k / 2) - 1)
-            new_obj = Objeto(rand_i, rand_j, rand_k, self.obj.largo, self.obj.ancho, self.obj.alto)
+            new_obj = Objeto(rand_i, rand_j, rand_k, self.obj.largo, self.obj.ancho, self.obj.alto, self.obj.puntoDado)
 
             if self.env.validarPosicionVacia(new_obj):
-                if self.validarPosiciones(new_obj):
-                    # CALCULAR EL FITNESS DEL OBJETO
-                    population.append(new_obj)
+                self.calcularFitness(new_obj)
+                population.append(new_obj)
         
         self.population = population
         
@@ -40,7 +40,7 @@ class AgenteGenetico:
         puntoY = []
         puntoZ = []
 
-        #Primer punto ()
+        #Primer punto 
         puntoX.append(obj.x - self.obj.largo/2)
         puntoY.append(obj.y - self.obj.ancho/2)
         puntoZ.append(obj.z - self.obj.alto/2)
@@ -59,6 +59,7 @@ class AgenteGenetico:
         puntoX.append(obj.x + self.obj.largo/2)
         puntoY.append(obj.y - self.obj.ancho/2)
         puntoZ.append(obj.z - self.obj.alto/2)
+        
 
         # Valido base de apoyo para el objeto en el punto 1
         for i in range(4):
@@ -68,15 +69,87 @@ class AgenteGenetico:
         return True
 
     # Calcula el fitness de un entorno en particular
-    def calcularFitness(self):
-        print("hola")
+    def calcularFitness(self, obj):
+        
+        # Calcular la fitness en base a la distancia horizontal de otros objetos
+        # Mientras mas distancia tenga de otros objetos mejor 
+        coordenadaZ = obj.z*2
+        menorDistancia = 0
+        for i in range(len(self.env.espacio)):
+            for j in range(len(self.env.espacio[i])):
+                if self.env.espacio[i][j][coordenadaZ] == "1":
+                    distancia = self.distancia(obj.x*2, obj.y*2, obj.z*2, i, j, coordenadaZ)
+                    if distancia < menorDistancia:
+                        menorDistancia = distancia
+                        
+        fitnessDistancia = menorDistancia*100/20
+        # Calcular la fitness en base a la dimension de la superficie donde esta apoyado
+        # Mientras mas grande la superficie donde este apoyado mejor
+        superficieEncontrada = 0                
+        for k in range(obj.z*2, -1, -1):
+            if self.env.espacio[obj.x*2][obj.y*2][k] == "1":
+                superficieEncontrada = k
+                break
+        
+        contadorXSuperior = 0
+        for u in range(obj.x*2,len(self.env.espacio)):
+            if self.env.espacio[u][obj.y*2][superficieEncontrada] == "1":
+                contadorXSuperior = contadorXSuperior + 1
+            
+        contadorXInferior = 0
+        for o in range(obj.x*2, -1, -1):
+            if self.env.espacio[o][obj.y*2][superficieEncontrada] == "1":
+                contadorXInferior = contadorXInferior + 1
+                
+        contadorYSuperior = 0
+        for p in range(obj.y*2, len(self.env.espacio)):
+            if self.env.espacio[obj.x*2][p][superficieEncontrada] == "1":
+                contadorYSuperior = contadorYSuperior + 1
+                
+        contadorYInferior = 0
+        for r in range(obj.y*2, -1, -1):
+            if self.env.espacio[obj.x*2][r][superficieEncontrada] == "1":
+                contadorYInferior = contadorYInferior + 1
+                                
+        superficie = contadorXSuperior + contadorXInferior + contadorYSuperior + contadorYInferior
+        
+        superficieFitness = superficie*100/40
+        # Calcular la fitness en base a la distancia vertical de otros objeto
+        #  Mientras mas distancia haya frente a otro objeto desde arriba mejor
+        
+        coordenadaX = obj.x*2
+        menorDistanciaSuperior = 0
+        for q in range(len(self.env.espacio)):
+            for w in range(len(self.env.espacio[i])):
+                if self.env.espacio[coordenadaX][q][w] == "1":
+                    distancia = self.distancia(obj.x*2, obj.y*2, obj.z*2, coordenadaX, q, w)
+                    if distancia < menorDistanciaSuperior:
+                        menorDistanciaSuperior = distancia
+                        
+        fitnessDistanciaSuperior = menorDistanciaSuperior*100/20
+        
+        # Calcular la fitness en base a la distancia del punto dado.
+        # Mientras mas cercano este al punto dado mejor
+        distanciaPuntoDado = self.distancia(obj.x*2, obj.y*2, obj.z*2, obj.puntoDado[0],obj.puntoDado[1] ,obj.puntoDado[2] )
+        fitnessdistanciaPuntoDado = distanciaPuntoDado*100/20
+        
+        obj.fitness = fitnessDistancia + superficieFitness + fitnessDistanciaSuperior + fitnessdistanciaPuntoDado
+        
+        
+
+        
+    # una funcion que calcula la distancia entre 2 puntos
+    def distancia(self, x1, y1, z1, x2, y2, z2):
+        return ((x1 - x2)**2 + (y1 - y2)**2 + (z1 - z2)**2)**0.5
+    
+    
        
     # Cruza 2 objetos y devuelve ambos para despues quedarme con los mejores resultados
     def cruzamiento(self, ind_1, ind_2):
         posibilidades = ["x", "y", "z"]
 
-        new_ind_1 = Objeto(ind_1.x, ind_1.y, ind_1.z, self.obj.largo, self.obj.ancho, self.obj.alto)
-        new_ind_2 = Objeto(ind_2.x, ind_2.y, ind_2.z, self.obj.largo, self.obj.ancho, self.obj.alto)
+        new_ind_1 = Objeto(ind_1.x, ind_1.y, ind_1.z, self.obj.largo, self.obj.ancho, self.obj.alto, self.obj.puntoDado)
+        new_ind_2 = Objeto(ind_2.x, ind_2.y, ind_2.z, self.obj.largo, self.obj.ancho, self.obj.alto, self.obj.puntoDado)
         for i in range(2):
             value = random.choice(posibilidades)
             posibilidades.remove(value)
@@ -136,8 +209,8 @@ class AgenteGenetico:
                 # Validamos y guardamos hijo1
                 if self.env.validarPosicionVacia(hijo_1):
                     if self.validarPosiciones(hijo_1):
-                        # CALCULAR EL FITNESS DEL OBJETO
-                        new_population.append(new_obj)
+                        self.calcularFitness(hijo_1)
+                        new_population.append(hijo_1)
 
                 # Mutamos el hijo 2
                 hijo_2 = self.mutacion(hijo_2)
@@ -145,13 +218,13 @@ class AgenteGenetico:
                 # Validamos y guardamos hijo2
                 if self.env.validarPosicionVacia(hijo_2):
                     if self.validarPosiciones(hijo_2):
-                        # CALCULAR EL FITNESS DEL OBJETO
-                        new_population.append(new_obj)
+                        self.calcularFitness(hijo_2)
+                        new_population.append(hijo_2)
 
 
                 # Guardamos a los padres
-                self.population.append(ind_1)
-                self.population.append(ind_2)
+                new_population.append(ind_1)
+                new_population.append(ind_2)
 
             # Guardamos si sobro un objeto
             if len(self.population) > 0:
@@ -161,12 +234,24 @@ class AgenteGenetico:
 
                 
             # Eliminamos X cantidad de los peores individuos de la nueva poblacion
-
+            # self.matarALosIncorrectos(new_population)
+            self.matarALosPeores(new_population)
 
 
             # Guardamos al mejor individuo de la nueva poblacion
-
+            if self.bestOption != None:
+                if new_population[0].fitness > self.bestOption.fitness:
+                    self.bestOption = new_population[0]
+            else:
+                self.bestOption = new_population[0]
             self.population = new_population
-
-
+        return self.bestOption
             
+    def matarALosPeores(self, population):
+        population.sort(key=lambda x: x.fitness, reverse=True)
+        population = population[:len(population)//2]
+        
+
+    def matarALosIncorrectos(self, new_population):
+        new_population = [x for x in new_population if self.validarPosiciones(x)]
+                

@@ -8,8 +8,9 @@ class Objeto:
     ancho = 0
     largo = 0
     fitness = 0
+    puntoDado = (0,0,0)
 
-    def __init__(self, x, y, z,largo, ancho, alto):
+    def __init__(self, x, y, z,largo, ancho, alto, puntoDado):
         self.x = x
         self.y = y
         self.z = z
@@ -26,6 +27,7 @@ class Objeto:
         self.vecEndZ = []
         self.punto1 = ()
         self.punto7 = ()
+        self.puntoDado = puntoDado
         
         self.obtenerCoordenadasCompletas()
     
