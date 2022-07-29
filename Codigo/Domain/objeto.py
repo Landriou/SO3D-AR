@@ -32,6 +32,17 @@ class Objeto:
         self.obtenerCoordenadasCompletas()
     
     def obtenerCoordenadasCompletas(self):
+        self.vecStartX = []
+        self.vecEndX = []
+        
+        self.vecStartY = []
+        self.vecEndY = []
+        
+        self.vecStartZ = []
+        self.vecEndZ = []
+        self.punto1 = ()
+        self.punto7 = ()
+
         #Primer punto ()
         punto1X = self.x - self.largo/2
         punto1Y = self.y - self.ancho/2

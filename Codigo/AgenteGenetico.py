@@ -13,14 +13,21 @@ class AgenteGenetico:
         self.bestOption = None
         
     #En base a un objeto, genera muchos posibles entornos
-    def generarPoblacion(self):
+    def generarPoblacion(self, objetos):
+        self.poblacion_inicial = 20
         population = []
 
-        while len(population) < 20:
+        lista = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9]
+        # posibles_z = []
+        # for i in range(len(objetos)):
+        #     val = objetos[i].z + objetos[i].alto/2
+        #     posibles_z.append(val)
 
-            rand_i = random.randint(0, (self.env.i / 2) - 1)
-            rand_j = random.randint(0, (self.env.j / 2) - 1)
-            rand_k = random.randint(0, (self.env.k / 2) - 1)
+        valores_validos = []
+        while len(population) < self.poblacion_inicial:
+            rand_i = random.choice(lista)
+            rand_j = random.choice(lista)
+            rand_k = random.choice(lista)
             new_obj = Objeto(rand_i, rand_j, rand_k, self.obj.largo, self.obj.ancho, self.obj.alto, self.obj.puntoDado)
 
             if ((rand_i - self.obj.largo/2) >= 0) and ((rand_i + self.obj.largo/2) < self.env.i):
@@ -30,8 +37,11 @@ class AgenteGenetico:
                             if self.env.validarPosicionVacia(new_obj):
                                 self.calcularFitness(new_obj)
                                 population.append(new_obj)
+                                
         
         self.population = population
+
+
         
 
 
@@ -43,6 +53,9 @@ class AgenteGenetico:
         puntoX = []
         puntoY = []
         puntoZ = []
+
+        if self.env.espacio[int(obj.x*2)][int(obj.y*2)][int(obj.z*2)] == 1:
+            return False
 
         #Primer punto 
         puntoX.append(obj.x - self.obj.largo/2)
@@ -67,17 +80,17 @@ class AgenteGenetico:
 
         # Valido base de apoyo para el objeto en el punto 1
         for i in range(4):
-            if self.env.validarBase(int(puntoX[i]), int(puntoY[i]), int(puntoZ[i])) == False:
+            if self.env.validarBase(puntoX[i], puntoY[i], puntoZ[i]) == False:
                 return False
         
         return True
 
     # Calcula el fitness de un entorno en particular
     def calcularFitness(self, obj):
-        
+
         # Calcular la fitness en base a la distancia horizontal de otros objetos
         # Mientras mas distancia tenga de otros objetos mejor 
-        coordenadaZ = obj.z*2
+        coordenadaZ = int(obj.z*2)
         menorDistancia = 0
         for i in range(len(self.env.espacio)):
             for j in range(len(self.env.espacio[i])):
@@ -90,29 +103,29 @@ class AgenteGenetico:
         # Calcular la fitness en base a la dimension de la superficie donde esta apoyado
         # Mientras mas grande la superficie donde este apoyado mejor
         superficieEncontrada = 0                
-        for k in range(obj.z*2, -1, -1):
-            if self.env.espacio[obj.x*2][obj.y*2][k] == 1:
+        for k in range(int(obj.z*2), -1, -1):
+            if self.env.espacio[int(obj.x*2)][int(obj.y*2)][k] == 1:
                 superficieEncontrada = k
                 break
         
         contadorXSuperior = 0
-        for u in range(obj.x*2,len(self.env.espacio)):
-            if self.env.espacio[u][obj.y*2][superficieEncontrada] == 1:
+        for u in range(int(obj.x*2),len(self.env.espacio)):
+            if self.env.espacio[u][int(obj.y*2)][superficieEncontrada] == 1:
                 contadorXSuperior = contadorXSuperior + 1
             
         contadorXInferior = 0
-        for o in range(obj.x*2, -1, -1):
-            if self.env.espacio[o][obj.y*2][superficieEncontrada] == 1:
+        for o in range(int(obj.x*2), -1, -1):
+            if self.env.espacio[o][int(obj.y*2)][superficieEncontrada] == 1:
                 contadorXInferior = contadorXInferior + 1
                 
         contadorYSuperior = 0
-        for p in range(obj.y*2, len(self.env.espacio)):
-            if self.env.espacio[obj.x*2][p][superficieEncontrada] == 1:
+        for p in range(int(obj.y*2), len(self.env.espacio)):
+            if self.env.espacio[int(obj.x*2)][p][superficieEncontrada] == 1:
                 contadorYSuperior = contadorYSuperior + 1
                 
         contadorYInferior = 0
-        for r in range(obj.y*2, -1, -1):
-            if self.env.espacio[obj.x*2][r][superficieEncontrada] == 1:
+        for r in range(int(obj.y*2), -1, -1):
+            if self.env.espacio[int(obj.x*2)][r][superficieEncontrada] == 1:
                 contadorYInferior = contadorYInferior + 1
                                 
         superficie = contadorXSuperior + contadorXInferior + contadorYSuperior + contadorYInferior
@@ -121,7 +134,7 @@ class AgenteGenetico:
         # Calcular la fitness en base a la distancia vertical de otros objeto
         #  Mientras mas distancia haya frente a otro objeto desde arriba mejor
         
-        coordenadaX = obj.x*2
+        coordenadaX = int(obj.x*2)
         menorDistanciaSuperior = 0
         for q in range(len(self.env.espacio)):
             for w in range(len(self.env.espacio[i])):
@@ -142,7 +155,7 @@ class AgenteGenetico:
         distanciaPuntoDado = self.distancia(obj.x*2, obj.y*2, obj.z*2, obj.puntoDado[0],obj.puntoDado[1] ,obj.puntoDado[2] )
         fitnessdistanciaPuntoDado = distanciaPuntoDado*100/20
         
-        obj.fitness = fitnessDistancia + superficieFitness + fitnessDistanciaSuperior + fitnessdistanciaPuntoDado + distanciaHastaElTechoFitness
+        obj.fitness = fitnessDistancia + superficieFitness + fitnessDistanciaSuperior - fitnessdistanciaPuntoDado + distanciaHastaElTechoFitness
         
         
 
@@ -174,7 +187,7 @@ class AgenteGenetico:
                 holder = new_ind_1.z
                 new_ind_1.z = new_ind_2.z
                 new_ind_2.z = holder
-
+        
         return new_ind_1,new_ind_2
 
         
@@ -184,21 +197,22 @@ class AgenteGenetico:
         rnd = random.uniform(0, 1)
         if rnd < 0.2:
             posibilidades = ["x", "y", "z"]
+            lista = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9]
             value = random.choice(posibilidades)
             if value == "x":
-                obj.x = random.randint(0, (self.env.i / 2) - 1)
+                obj.x = random.choice(lista)
             elif value == "y":
-                obj.y = random.randint(0, (self.env.j / 2) - 1)
+                obj.y = random.choice(lista)
             elif value == "z":
-                obj.z = random.randint(0, (self.env.k / 2) - 1)
+                obj.z = random.choice(lista)
 
         return obj
         
         
     # Resuelve toda la logica del algoritmo genetico, aca deberia ir todo el codigo llamadp
-    def startGenetico(self):
+    def startGenetico(self, objetos):
         #Nueva poblacion
-        self.generarPoblacion()
+        self.generarPoblacion(objetos)
         
         # Iteramos hasta que se cumpla el numero de intentos
         for i in range(self.maxTryStates):
@@ -219,6 +233,7 @@ class AgenteGenetico:
                 if self.env.validarPosicionVacia(hijo_1):
                     if self.validarPosiciones(hijo_1):
                         self.calcularFitness(hijo_1)
+                        hijo_1.obtenerCoordenadasCompletas()
                         new_population.append(hijo_1)
 
                 # Mutamos el hijo 2
@@ -228,6 +243,7 @@ class AgenteGenetico:
                 if self.env.validarPosicionVacia(hijo_2):
                     if self.validarPosiciones(hijo_2):
                         self.calcularFitness(hijo_2)
+                        hijo_2.obtenerCoordenadasCompletas()
                         new_population.append(hijo_2)
 
 
@@ -241,10 +257,10 @@ class AgenteGenetico:
                 self.population.remove(self.population[0])
 
 
-                
+
             # Eliminamos X cantidad de los peores individuos de la nueva poblacion
-            # self.matarALosIncorrectos(new_population)
-            self.matarALosPeores(new_population)
+            new_population = self.matarALosIncorrectos(new_population)
+            new_population = self.matarALosPeores(new_population)
 
 
             # Guardamos al mejor individuo de la nueva poblacion
@@ -258,9 +274,9 @@ class AgenteGenetico:
             
     def matarALosPeores(self, population):
         population.sort(key=lambda x: x.fitness, reverse=True)
-        population = population[:len(population)//2]
+        return population[:self.poblacion_inicial]
         
 
     def matarALosIncorrectos(self, new_population):
-        new_population = [x for x in new_population if self.validarPosiciones(x)]
+        return [x for x in new_population if self.validarPosiciones(x)]
                 
