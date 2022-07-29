@@ -33,7 +33,15 @@ ent.objetos = objetos
 ent.objetosAlEspacio(objetos)
 
 objeto_test = Objeto(1,1,1,2,2,2, (5,5,5))
+objeto_test2 = Objeto(2,6,2,2,2,4, (5,5,5))
+objeto_test3 = Objeto(2,6,6,2,2,4, (5,5,5))
 agente = AgenteGenetico(10, ent, objeto_test)
+
+
+print(agente.validarPosiciones(objeto_test2))
+print(agente.validarPosiciones(objeto_test3))
+
+
 
 bestObjeto = agente.startGenetico()
 ent.objetos.append(bestObjeto)

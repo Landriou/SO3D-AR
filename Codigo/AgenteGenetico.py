@@ -80,7 +80,7 @@ class AgenteGenetico:
         menorDistancia = 0
         for i in range(len(self.env.espacio)):
             for j in range(len(self.env.espacio[i])):
-                if self.env.espacio[i][j][coordenadaZ] == "1":
+                if self.env.espacio[i][j][coordenadaZ] == 1:
                     distancia = self.distancia(obj.x*2, obj.y*2, obj.z*2, i, j, coordenadaZ)
                     if distancia < menorDistancia:
                         menorDistancia = distancia
@@ -90,28 +90,28 @@ class AgenteGenetico:
         # Mientras mas grande la superficie donde este apoyado mejor
         superficieEncontrada = 0                
         for k in range(obj.z*2, -1, -1):
-            if self.env.espacio[obj.x*2][obj.y*2][k] == "1":
+            if self.env.espacio[obj.x*2][obj.y*2][k] == 1:
                 superficieEncontrada = k
                 break
         
         contadorXSuperior = 0
         for u in range(obj.x*2,len(self.env.espacio)):
-            if self.env.espacio[u][obj.y*2][superficieEncontrada] == "1":
+            if self.env.espacio[u][obj.y*2][superficieEncontrada] == 1:
                 contadorXSuperior = contadorXSuperior + 1
             
         contadorXInferior = 0
         for o in range(obj.x*2, -1, -1):
-            if self.env.espacio[o][obj.y*2][superficieEncontrada] == "1":
+            if self.env.espacio[o][obj.y*2][superficieEncontrada] == 1:
                 contadorXInferior = contadorXInferior + 1
                 
         contadorYSuperior = 0
         for p in range(obj.y*2, len(self.env.espacio)):
-            if self.env.espacio[obj.x*2][p][superficieEncontrada] == "1":
+            if self.env.espacio[obj.x*2][p][superficieEncontrada] == 1:
                 contadorYSuperior = contadorYSuperior + 1
                 
         contadorYInferior = 0
         for r in range(obj.y*2, -1, -1):
-            if self.env.espacio[obj.x*2][r][superficieEncontrada] == "1":
+            if self.env.espacio[obj.x*2][r][superficieEncontrada] == 1:
                 contadorYInferior = contadorYInferior + 1
                                 
         superficie = contadorXSuperior + contadorXInferior + contadorYSuperior + contadorYInferior
@@ -124,19 +124,24 @@ class AgenteGenetico:
         menorDistanciaSuperior = 0
         for q in range(len(self.env.espacio)):
             for w in range(len(self.env.espacio[i])):
-                if self.env.espacio[coordenadaX][q][w] == "1":
+                if self.env.espacio[coordenadaX][q][w] == 1:
                     distancia = self.distancia(obj.x*2, obj.y*2, obj.z*2, coordenadaX, q, w)
                     if distancia < menorDistanciaSuperior:
                         menorDistanciaSuperior = distancia
-                        
-        fitnessDistanciaSuperior = menorDistanciaSuperior*100/20
+        
+        fitnessDistanciaSuperior = menorDistanciaSuperior*100/20            
+             
+        #Distancia hasta el techo
+        distanciaHastaElTecho = self.distancia(obj.x*2, obj.y*2, obj.z*2,obj.x*2, obj.y*2, 19)
+        distanciaHastaElTechoFitness = distanciaHastaElTecho*100/30
+      
         
         # Calcular la fitness en base a la distancia del punto dado.
         # Mientras mas cercano este al punto dado mejor
         distanciaPuntoDado = self.distancia(obj.x*2, obj.y*2, obj.z*2, obj.puntoDado[0],obj.puntoDado[1] ,obj.puntoDado[2] )
         fitnessdistanciaPuntoDado = distanciaPuntoDado*100/20
         
-        obj.fitness = fitnessDistancia + superficieFitness + fitnessDistanciaSuperior + fitnessdistanciaPuntoDado
+        obj.fitness = fitnessDistancia + superficieFitness + fitnessDistanciaSuperior + fitnessdistanciaPuntoDado + distanciaHastaElTechoFitness
         
         
 
