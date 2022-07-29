@@ -48,7 +48,7 @@ class Entorno:
         if (coordX * 2) < 0 or (coordX * 2) >= self.i or (coordY * 2) < 0 or (coordY * 2) >= self.j or (coordZ * 2) < 0 or (coordZ * 2) >= self.k:
             return False
         
-        if self.espacio[(coordX*2) - 1, (coordY*2)-1, (coordZ*2)-1] != 1:
+        if self.espacio[(coordX*2) , (coordY*2), (coordZ*2) - 1] != 1:
             return False
         
         return True

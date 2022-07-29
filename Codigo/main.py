@@ -8,7 +8,7 @@ from AgenteGenetico import AgenteGenetico
 #A
 obje1= Objeto(1,1,1,2,2,2,(0,0,0))
 #B
-obje2= Objeto(5,1,1,2,2,5,(0,0,0))
+obje2= Objeto(5,1,2,2,2,4,(0,0,0))
 #C
 obje3= Objeto(2,6,1.5,2,5,3,(0,0,0))
 #D

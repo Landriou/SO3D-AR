@@ -23,9 +23,12 @@ class AgenteGenetico:
             rand_k = random.randint(0, (self.env.k / 2) - 1)
             new_obj = Objeto(rand_i, rand_j, rand_k, self.obj.largo, self.obj.ancho, self.obj.alto, self.obj.puntoDado)
 
-            if self.env.validarPosicionVacia(new_obj):
-                self.calcularFitness(new_obj)
-                population.append(new_obj)
+            if ((rand_i - self.obj.largo/2) >= 0) and ((rand_i + self.obj.largo/2) < self.env.i):
+                if ((rand_j - self.obj.ancho/2) >= 0) and ((rand_j + self.obj.ancho/2) < self.env.j):
+                    if ((rand_k - self.obj.alto/2) >= 0) and ((rand_k + self.obj.alto/2) < self.env.k):
+                        if self.validarPosiciones(new_obj):
+                            self.calcularFitness(new_obj)
+                            population.append(new_obj)
         
         self.population = population
         
@@ -190,7 +193,7 @@ class AgenteGenetico:
     def startGenetico(self):
         #Nueva poblacion
         self.generarPoblacion()
-
+        
         # Iteramos hasta que se cumpla el numero de intentos
         for i in range(self.maxTryStates):
             new_population = []
