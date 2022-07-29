@@ -27,8 +27,9 @@ class AgenteGenetico:
                 if ((rand_j - self.obj.ancho/2) >= 0) and ((rand_j + self.obj.ancho/2) < self.env.j):
                     if ((rand_k - self.obj.alto/2) >= 0) and ((rand_k + self.obj.alto/2) < self.env.k):
                         if self.validarPosiciones(new_obj):
-                            self.calcularFitness(new_obj)
-                            population.append(new_obj)
+                            if self.env.validarPosicionVacia(new_obj):
+                                self.calcularFitness(new_obj)
+                                population.append(new_obj)
         
         self.population = population
         
