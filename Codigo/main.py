@@ -82,9 +82,12 @@ ent = Entorno()
 ent.objetos = objetos
 ent.objetosAlEspacio(objetos)
 
-objeto_test = Objeto(6,3,7,2,2,2,(8,8,8))
+objeto_test = Objeto(6,4,6,1,1,1,(0,0,0))
 agente = AgenteGenetico(10, ent, objeto_test)
 
 bestObjeto = agente.startGenetico(objetos)
+#print(bestObjeto.x)
+#print(bestObjeto.y)
+#print(bestObjeto.z)
 ent.objetos.append(bestObjeto)
 ent.iniciar()

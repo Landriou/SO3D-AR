@@ -30,7 +30,7 @@ class Entorno:
            
     def validarPosicionVacia(self, objeto):
         #indice es x(0), y(1) y z(2)
-        for i in range(int(objeto.punto1[0]*2), int(objeto.punto7[0]*2) ):
+        for i in range(int(objeto.punto1[0]*2), int(objeto.punto7[0]*2)):
             for j in range(int(objeto.punto1[1]*2), int(objeto.punto7[1]*2)):
                 for k in range(int(objeto.punto1[2]*2), int(objeto.punto7[2]*2)):
                     if self.espacio[i,j,k] == 1:
