@@ -11,6 +11,13 @@ class AgenteGenetico:
         self.envMaximoLocal = None
         self.obj = obj
         self.bestOption = None
+
+        self.valores_poblacion_inicial = []
+
+        self.evolucion_generacional_hijo1 = []
+        self.evolucion_generacional_hijo2 = []
+        self.mejor_de_cada_generacion = []
+
         
     #En base a un objeto, genera muchos posibles entornos
     def generarPoblacion(self, objetos):
@@ -37,19 +44,9 @@ class AgenteGenetico:
                             if self.env.validarPosicionVacia(new_obj):
                                 new_obj.fitness = self.calcularFitness(new_obj)
                                 population.append(new_obj)
-                                print()
-                                print("----------------------------------------------------")
-                                print(new_obj.fitnessDistancia)
-                                print(new_obj.superficieFitness)
-                                print(new_obj.fitnessDistanciaSuperior)
-                                print(new_obj.fitnessdistanciaPuntoDado)
-                                print(new_obj.fitness)
-                                print()
+                                self.valores_poblacion_inicial.append(new_obj)
         
         self.population = population
-
-
-        
 
 
         
@@ -234,6 +231,8 @@ class AgenteGenetico:
         # Iteramos hasta que se cumpla el numero de intentos
         for i in range(self.maxTryStates):
             new_population = []
+            mejores_de_la_generacion_hijo1 = []
+            mejores_de_la_generacion_hijo2 = []
             while len(self.population) > 1:
                 # Seleccionamos 2 individuos
                 ind_1 = random.choice(self.population)
@@ -252,6 +251,7 @@ class AgenteGenetico:
                         hijo_1.fitness = self.calcularFitness(hijo_1)
                         hijo_1.obtenerCoordenadasCompletas()
                         new_population.append(hijo_1)
+                        mejores_de_la_generacion_hijo1.append(hijo_1)
 
                 # Mutamos el hijo 2
                 hijo_2 = self.mutacion(hijo_2)
@@ -262,7 +262,7 @@ class AgenteGenetico:
                         hijo_2.fitness = self.calcularFitness(hijo_2)
                         hijo_2.obtenerCoordenadasCompletas()
                         new_population.append(hijo_2)
-
+                        mejores_de_la_generacion_hijo2.append(hijo_2)
 
                 # Guardamos a los padres
                 new_population.append(ind_1)
@@ -287,6 +287,9 @@ class AgenteGenetico:
             else:
                 self.bestOption = new_population[0]
             self.population = new_population
+            self.evolucion_generacional_hijo1.append(mejores_de_la_generacion_hijo1)
+            self.evolucion_generacional_hijo2.append(mejores_de_la_generacion_hijo2)
+            self.mejor_de_cada_generacion.append(self.bestOption)
         return self.bestOption
             
     def matarALosPeores(self, population):

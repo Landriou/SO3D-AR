@@ -31,20 +31,33 @@ ent = Entorno()
 ent.objetos = objetos
 ent.objetosAlEspacio(objetos)
 
-objeto_test = Objeto(8,5,6,1,1,1,(2,2,2))
-agente = AgenteGenetico(20, ent, objeto_test)
+
+objeto_test = Objeto(8,5,6,1,1,1,(5,5,5))
+agente = AgenteGenetico(15, ent, objeto_test)
 
 bestObjeto = agente.startGenetico(objetos)
-print()
-print("SOLUCION:")
-print()
-print("----------------------------------------------------")
-print(bestObjeto.fitnessDistancia)
-print(bestObjeto.superficieFitness)
-print(bestObjeto.fitnessDistanciaSuperior)
-print(bestObjeto.fitnessdistanciaPuntoDado)
-print(bestObjeto.fitness)
-print()
 
+
+# print("HIJOS 1")
+# for i in range(len(agente.evolucion_generacional_hijo1)):
+#     print()
+#     for j in range(len(agente.evolucion_generacional_hijo1[i])):
+#         print(round(agente.evolucion_generacional_hijo1[i][j].fitness, 2))
+
+# print()
+# print("HIJOS 2")
+# for i in range(len(agente.evolucion_generacional_hijo2)):
+#     print()
+#     for j in range(len(agente.evolucion_generacional_hijo2[i])):
+#         print(round(agente.evolucion_generacional_hijo2[i][j].fitness, 2))
+
+
+# for i in range(len(agente.valores_poblacion_inicial)):
+#     print(str(round(agente.valores_poblacion_inicial[i].fitness, 4)).replace(".", ","))
+
+
+print()
+print("FINAL")
+print(bestObjeto.fitness)
 ent.objetos.append(bestObjeto)
 ent.iniciar()

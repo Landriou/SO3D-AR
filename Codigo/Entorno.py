@@ -18,7 +18,7 @@ class Entorno:
     def iniciar(self):
         graficador = Graficador()
         for i in range(len(self.objetos)):
-            color = 'b' if i % 2 == 0 else 'r'
+            color = 'b' if i % 2 == 0 else 'b'
             if i == len(self.objetos) - 1:
                 color = 'g'
             graficador.graficar(self.objetos[i], color)
