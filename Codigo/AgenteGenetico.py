@@ -14,7 +14,7 @@ class AgenteGenetico:
         
     #En base a un objeto, genera muchos posibles entornos
     def generarPoblacion(self, objetos):
-        self.poblacion_inicial = 20
+        self.poblacion_inicial = 50
         population = []
 
         lista = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9]
@@ -35,9 +35,16 @@ class AgenteGenetico:
                     if ((rand_k - self.obj.alto/2) >= 0) and ((rand_k + self.obj.alto/2) < self.env.k):
                         if self.validarPosiciones(new_obj):
                             if self.env.validarPosicionVacia(new_obj):
-                                self.calcularFitness(new_obj)
+                                new_obj.fitness = self.calcularFitness(new_obj)
                                 population.append(new_obj)
-                                
+                                print()
+                                print("----------------------------------------------------")
+                                print(new_obj.fitnessDistancia)
+                                print(new_obj.superficieFitness)
+                                print(new_obj.fitnessDistanciaSuperior)
+                                print(new_obj.fitnessdistanciaPuntoDado)
+                                print(new_obj.fitness)
+                                print()
         
         self.population = population
 
@@ -91,7 +98,7 @@ class AgenteGenetico:
         # Calcular la fitness en base a la distancia horizontal de otros objetos
         # Mientras mas distancia tenga de otros objetos mejor 
         coordenadaZ = int(obj.z*2)
-        menorDistancia = 0
+        menorDistancia = 1000000
         for i in range(len(self.env.espacio)):
             for j in range(len(self.env.espacio[i])):
                 if self.env.espacio[i][j][coordenadaZ] == 1:
@@ -100,6 +107,7 @@ class AgenteGenetico:
                         menorDistancia = distancia
                         
         fitnessDistancia = menorDistancia*100/20
+        obj.fitnessDistancia = fitnessDistancia
         # Calcular la fitness en base a la dimension de la superficie donde esta apoyado
         # Mientras mas grande la superficie donde este apoyado mejor
         superficieEncontrada = 0                
@@ -110,32 +118,37 @@ class AgenteGenetico:
         
         contadorXSuperior = 0
         for u in range(int(obj.x*2),len(self.env.espacio)):
-            if self.env.espacio[u][int(obj.y*2)][superficieEncontrada] == 1:
                 contadorXSuperior = contadorXSuperior + 1
+                if self.env.espacio[u][int(obj.y*2)][superficieEncontrada] != 1:
+                    break
             
         contadorXInferior = 0
         for o in range(int(obj.x*2), -1, -1):
-            if self.env.espacio[o][int(obj.y*2)][superficieEncontrada] == 1:
-                contadorXInferior = contadorXInferior + 1
+            contadorXInferior = contadorXInferior + 1
+            if self.env.espacio[o][int(obj.y*2)][superficieEncontrada] != 1:
+                break
                 
         contadorYSuperior = 0
         for p in range(int(obj.y*2), len(self.env.espacio)):
-            if self.env.espacio[int(obj.x*2)][p][superficieEncontrada] == 1:
-                contadorYSuperior = contadorYSuperior + 1
-                
+            contadorYSuperior = contadorYSuperior + 1
+            if self.env.espacio[int(obj.x*2)][p][superficieEncontrada] != 1:
+                break
+
         contadorYInferior = 0
         for r in range(int(obj.y*2), -1, -1):
-            if self.env.espacio[int(obj.x*2)][r][superficieEncontrada] == 1:
-                contadorYInferior = contadorYInferior + 1
-                                
+            contadorYInferior = contadorYInferior + 1
+            if self.env.espacio[int(obj.x*2)][r][superficieEncontrada] != 1:
+                break
+
         superficie = contadorXSuperior + contadorXInferior + contadorYSuperior + contadorYInferior
         
         superficieFitness = superficie*100/40
+        obj.superficieFitness = superficieFitness
         # Calcular la fitness en base a la distancia vertical de otros objeto
         #  Mientras mas distancia haya frente a otro objeto desde arriba mejor
         
         coordenadaX = int(obj.x*2)
-        menorDistanciaSuperior = 0
+        menorDistanciaSuperior = 10000000000
         for q in range(len(self.env.espacio)):
             for w in range(len(self.env.espacio[i])):
                 if self.env.espacio[coordenadaX][q][w] == 1:
@@ -143,19 +156,23 @@ class AgenteGenetico:
                     if distancia < menorDistanciaSuperior:
                         menorDistanciaSuperior = distancia
         
-        fitnessDistanciaSuperior = menorDistanciaSuperior*100/20            
+        fitnessDistanciaSuperior = menorDistanciaSuperior*100/20  
+        obj.fitnessDistanciaSuperior = fitnessDistanciaSuperior          
              
         #Distancia hasta el techo
-        distanciaHastaElTecho = self.distancia(obj.x*2, obj.y*2, obj.z*2,obj.x*2, obj.y*2, 19)
-        distanciaHastaElTechoFitness = distanciaHastaElTecho*100/30
+
+        # distanciaHastaElTecho = self.distancia(obj.x*2, obj.y*2, obj.z*2,obj.x*2, obj.y*2, 19)
+        # distanciaHastaElTechoFitness = distanciaHastaElTecho*100/30
+        # obj.distanciaHastaElTechoFitness = distanciaHastaElTechoFitness
       
         
         # Calcular la fitness en base a la distancia del punto dado.
         # Mientras mas cercano este al punto dado mejor
         distanciaPuntoDado = self.distancia(obj.x*2, obj.y*2, obj.z*2, obj.puntoDado[0],obj.puntoDado[1] ,obj.puntoDado[2] )
-        fitnessdistanciaPuntoDado = distanciaPuntoDado*100/20
+        fitnessdistanciaPuntoDado = distanciaPuntoDado*100/40
+        obj.fitnessdistanciaPuntoDado = fitnessdistanciaPuntoDado
         
-        obj.fitness = fitnessDistancia + superficieFitness + fitnessDistanciaSuperior - fitnessdistanciaPuntoDado + distanciaHastaElTechoFitness
+        return fitnessDistancia + superficieFitness + fitnessDistanciaSuperior - fitnessdistanciaPuntoDado 
         
         
 
@@ -232,7 +249,7 @@ class AgenteGenetico:
                 # Validamos y guardamos hijo1
                 if self.env.validarPosicionVacia(hijo_1):
                     if self.validarPosiciones(hijo_1):
-                        self.calcularFitness(hijo_1)
+                        hijo_1.fitness = self.calcularFitness(hijo_1)
                         hijo_1.obtenerCoordenadasCompletas()
                         new_population.append(hijo_1)
 
@@ -242,7 +259,7 @@ class AgenteGenetico:
                 # Validamos y guardamos hijo2
                 if self.env.validarPosicionVacia(hijo_2):
                     if self.validarPosiciones(hijo_2):
-                        self.calcularFitness(hijo_2)
+                        hijo_2.fitness = self.calcularFitness(hijo_2)
                         hijo_2.obtenerCoordenadasCompletas()
                         new_population.append(hijo_2)
 
@@ -278,5 +295,10 @@ class AgenteGenetico:
         
 
     def matarALosIncorrectos(self, new_population):
-        return [x for x in new_population if self.validarPosiciones(x)]
+        valid_population = []
+        for i in range(len(new_population)):
+            if self.validarPosiciones(new_population[i]) and self.env.validarPosicionVacia(new_population[i]):
+                valid_population.append(new_population[i])
+        return valid_population
+
                 

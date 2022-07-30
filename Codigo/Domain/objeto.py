@@ -10,6 +10,7 @@ class Objeto:
     fitness = 0
     puntoDado = (0,0,0)
 
+
     def __init__(self, x, y, z,largo, ancho, alto, puntoDado):
         self.x = x
         self.y = y
@@ -17,6 +18,13 @@ class Objeto:
         self.alto = alto
         self.ancho = ancho
         self.largo = largo
+        self.fitness = 0
+
+        self.fitnessDistancia = 0 
+        self.superficieFitness = 0 
+        self.fitnessDistanciaSuperior = 0 
+        self.fitnessdistanciaPuntoDado = 0 
+
         self.vecStartX = []
         self.vecEndX = []
         
