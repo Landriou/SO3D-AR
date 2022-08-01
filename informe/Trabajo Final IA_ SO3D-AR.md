@@ -1,4 +1,6 @@
-﻿**Trabajo Final: ![](Aspose.Words.faafeb33-82a7-4691-b29e-aca02c801f7c.001.png)SO3D-AR** 
+﻿**Trabajo FinalSO3D-AR** 
+: ![](Aspose.Words.faafeb33-82a7-4691-b29e-aca02c801f7c.001.png)
+
 
 **Sebastian Fuchilieri y**
 
