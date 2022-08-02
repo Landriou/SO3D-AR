@@ -48,6 +48,41 @@ padres, de los cuales de forma aleatoria, se obtienen a los hijos. Este método 
 
 Por otro lado, Multi-Point Crossover cumple con todas las necesidades que nos planteamos a la hora de cruzar padres y generar los hijos, ya que al realizar múltiples cortes y hacer los cruzamientos, esto se puede interpretar como un objeto que cambia su posición en un espacio 3d, variando su posición relativa en el espacio, todo esto considerando que los genes representan diferentes características del objeto a colocar en el espacio.
 
+##### Detalle sobre el cruzamiento
+
+La estructura genetica que se propuso para los individuos en este trabajo gue la siguiente:
+
+ - Posicion del objeto en el eje X
+ - Posicion del objeto en el eje Y
+ - Posicion del objeto en el eje Z
+ - Alto del objeto
+ - Ancho del objeto
+ - Largo del objeto
+ - Punto dado al cual se quiere aproximar
+
+Analizaremos las caracterisitecas mas basicas pero, a su vez, mas relevantes para el problema, las posiciones en el plano coordenado X Y Z.
+
+Como se menciono un poco mas arriba, se utilizo Multi-Point Crossover, en el mismo, el corte se realiza de manera aleatoria, en cada cruzamiento se varia que cromosomas del gen seran cruzados, de esta forma se aumenta aun mas la aleatoriedad a al hora de cruzar, esto descicion se tomo teniendo en cuenta que en cada iteracion, se reutiliza a los mejores de la poblacion. Con esta pequeña pero efectiva modificacion, se evito caer en gran medida en maximos locales o que los cruzamientos se vean repetidos y se produzca un estancamiento.
+
+Para hacer una demostracion del cruzamiento y que la misma no sea engorrosa de entender, se procede a utilizar un entorno totalmente vacio, ya que la finalidad del mismo es mostrar claramente el comportamiento de un cruzamiento, por lo que en esta demostracion no se aplicaran vaklidaciones sobre los individuos.
+
+Para realizarlo, se necesitan 2 individuos previamente generados:
+
+###### Entorno con los individuos colocados antes del cruzamiento
+
+![](demo-cruzamiento-sin-hijos.jpg)
+
+
+###### Entorno con los individuos y los nuevos individuos resultantes del cruzamiento
+
+![](demo-cruzamiento-con-hijos.jpg)
+
+
+Con estra sencilla demostracion, se puede ver claramente los dos individuos (cubos azules) previos al cruzamiento y luego, los mismos individuos y los hijos resultantes del cruzamiento (cubos verdes).
+
+Con este ejempplo, se puede ver claramente como el cruzamiento, en este caso, se dio entre entre el par coordenado (X,Z), esto quiere decir, que cada hijo conservo la posicion en el eje Y del padre principal del cual se copio, pero sus coordenadas X Z fueron una combinacion aleatoria de la de sus progenitores. Como el cruzamiento se da de forma aleatoria, el par ordenado podria haber sido cualquier otra de las posibles combinaciones. Luego de eso, los individuos resultantes pasarian a una instancia de posible mutacion y luego se les harian las validaciones pertinentes para determinar si son o no aptos.
+
+
 Una vez resuelta la técnica de cruzamiento a utilizar nos quedaba determinar las validaciones de que objetos colocados en el espacio considerábamos correctos, cómo calculamos su fitness y al final poner todo en funcionamiento en el algoritmo genético.
 
 2. Validaciones en el espacio
