@@ -149,23 +149,34 @@ En el cuarto criterio se especificó un punto en la inicialización del objeto, 
 Para la construcción de la funcion fitness se tuvieron en cuenta las criterios anteriores y se ponderó de la siguiente manera:
 
 En el caso de la metrica de fitness que le damos a un objeto mientras mas grande sea la superficie en la cual esta apoyado, hicimos un calculo que implico lo siguiente:
-    - Desde el centro del objeto bajar n posiciones en el eje Z hasta encontrar una superficie
-    - Con la superficie encontrada en Z = N, procedemos a iterar en los 4 ejes paralelos al plano XY, es decir, disparamos un bucle que aumente en 1 la X de la posicion encontrada, que reste en 1 a la X de la posicion encontrada, que sume 1 a la Y de la posicion y que reste 1 a la Y de la posicion.
-    - El recorrido en los 4 ejes, se detiene cuando encuentra un lugar en el espacio que no esta lleno, es decir cuando llega al borde del objeto, despues devuelve los valores de la cantidad de posiciones que fueron recorridos en los 4 ejes paralelos al plano XY. Luego, estos valores son usados para calcular el fitness
+
+- Desde el centro del objeto bajar n posiciones en el eje Z hasta encontrar una superficie
+
+- Con la superficie encontrada en Z = N, procedemos a iterar en los 4 ejes paralelos al plano XY, es decir, disparamos un bucle que aumente en 1 la X de la posicion 
+    encontrada, que reste en 1 a la X de la posicion encontrada, que sume 1 a la Y de la posicion y que reste 1 a la Y de la posicion.
+
+- El recorrido en los 4 ejes, se detiene cuando encuentra un lugar en el espacio que no esta lleno, es decir cuando llega al borde del objeto, despues devuelve los valores de la cantidad de posiciones que fueron recorridos en los 4 ejes paralelos al plano XY. Luego, estos valores son usados para calcular el fitness
 
 La formula del fitness de la superficie es:
+
 fitnessDeLaSuperficie = (recorridoEnSuperiorX + recorridoEnSuperiorY + recorridoEnXInferior + recorridoEnYInferior) * 100/40
+
 Se observa que en la formula se le agrega una multiplicacion 100 y una division por 40, esto es para ponderar el fitness con un numero del 1 al 100, por eso a traves de la formula de porcentaje se calcula de esta forma. El numero 40 es el resultado maximo que puede tener una superficie de base, esta metrica esta tomada desde el centro hacia los 4 lados, en un espacio con 20 puntos de ancho y de profundidad, desde el centro se tienen 10 puntos hacia los 4 lados.
 
 En el segundo caso, para la metrica del fitness de mientras mas distancia tenga de otros objetos mejor procedimos de la siguiente manera:
-    - Desde el centro del objeto, cortamos ese punto con un plano paralelo al XY y se empieza a recorrer este plano buscando los puntos que se encuentran ocupados
-    - Cada vez que se encuentra un punto ocupado, se calcula distancia de ese punto con la formula de la distancia en el plano
-    - Vamos iterando a traves de los puntos y nos quedamos con la distancia menor.
+
+- Desde el centro del objeto, cortamos ese punto con un plano paralelo al XY y se empieza a recorrer este plano buscando los puntos que se encuentran ocupados
+
+- Cada vez que se encuentra un punto ocupado, se calcula distancia de ese punto con la formula de la distancia en el plano
+
+- Vamos iterando a traves de los puntos y nos quedamos con la distancia menor.
 
 Esta distancia menor es la metrica que se utiliza para la calcular el fitness
+
 La formula es la siguiente:
 
 fitnessDistancia = distanciaMenor *100/20
+
 Se observa que en la formula se le agrega una multiplicacion 100 y una division por 20, esto es para ponderar el fitness con un numero del 1 al 100, por eso a traves de la formula de porcentaje se calcula de esta forma. El numero 20 es el resultado maximo que puede tener la distancia entre 2 puntos en el plano, esto se calcula en base al ancho del espacio.
 
 En el tercer caso, para la metrica de la cercania al punto dado, mientras menor sea la distancia al punto dado es mejor la metrica de fitness, esto se calcula a traves de la formula de la distancia desde el centro del objeto hasta el punto dado, esto es distancia en el espacio y no en el plano.
@@ -173,18 +184,24 @@ En el tercer caso, para la metrica de la cercania al punto dado, mientras menor 
 Una vez obtenida esta métrica de distancia se procede a calcular la formula
 
 fitnessPuntoDado = distanciaPuntoDado * 100/40
+
 Se observa que en la formula se le agrega una multiplicacion 100 y una division por 40, esto es para ponderar el fitness con un numero del 1 al 100, por eso a traves de la formula de porcentaje se calcula de esta forma. El numero 40 es el resultado maximo que puede tener la distancia entre 2 puntos en el espacio, esta situacion seria en el caso de que los puntos estuvieran en los extremos opuestos del espacio.
 
 
 En el cuarto caso, para la metrica de fitness de la distancia desde arriba se calculo de la siguiente forma:
-    - Desde el centro del objeto, cortamos ese punto con un plano paralelo al YZ y se empieza a recorrer este plano buscando los puntos que se encuentran ocupados
-    - Cada vez que se encuentra un punto ocupado, se calcula distancia de ese punto con la formula de la distancia en el plano
-    - Vamos iterando a traves de los puntos y nos quedamos con la distancia menor hacia arriba.
+
+- Desde el centro del objeto, cortamos ese punto con un plano paralelo al YZ y se empieza a recorrer este plano buscando los puntos que se encuentran ocupados.
+
+- Cada vez que se encuentra un punto ocupado, se calcula distancia de ese punto con la formula de la distancia en el plano.
+    
+- Vamos iterando a traves de los puntos y nos quedamos con la distancia menor hacia arriba.
 
 Esta distancia menor hacia arriba es la metrica que se utiliza para la calcular el fitness
+
 La formula es la siguiente:
 
 fitnessDistancia = distanciaMenorHaciaArriba *100/20
+
 Se observa que en la formula se le agrega una multiplicacion 100 y una division por 20, esto es para ponderar el fitness con un numero del 1 al 100, por eso a traves de la formula de porcentaje se calcula de esta forma. El numero 20 es el resultado maximo que puede tener la distancia entre 2 puntos en el plano, esto se calcula en base a la altura del espacio.
 
 Finalmente, una vez obtenidas las 4 metricas de fitness se suma todo el fitness en una sola variable, excepto por la distancia del punto dado ya que es necesario que esta metrica se reste en vez de sumar, porque el fitness deberia aumentar mientras menos distancia haya hacia el punto dado.
