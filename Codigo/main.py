@@ -2,7 +2,7 @@ from Entorno import Entorno
 from Domain.objeto import Objeto
 from graficador import Graficador
 from AgenteGenetico import AgenteGenetico
-
+from time import time
 
 
 #A
@@ -31,18 +31,14 @@ ent = Entorno()
 ent.objetos = objetos
 ent.objetosAlEspacio(objetos)
 
-ind1 = Objeto(7, 6.5, 5.5 ,1,1,1,(5,5,5))
-ind2 = Objeto(3, 4, 6, 1,1,1,(5,5,5))
-## Proceso de cruzamiento
 
-## Resultado de cruzamiento
-hijo1 = Objeto(3, 6.5, 1 ,1,1,1,(5,5,5))
-hijo2 = Objeto(7, 4, 6, 5.5 ,1,1,(5,5,5))
+objeto_test = Objeto(2,4,9,1,1,1,(5,5,5))
 
-
-ent.objetos.append(objeto_test)
-ent.iniciar()
-
+agente = AgenteGenetico(256,ent,objeto_test)
+start_time = time()
+agente.startGenetico()
+elapsed_time = time() - start_time
+print ("Tiempo de ejecucion: %.10f segundos." % elapsed_time)
 
 # print("HIJOS 1")
 # for i in range(len(agente.evolucion_generacional_hijo1)):

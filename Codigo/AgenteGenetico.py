@@ -20,15 +20,11 @@ class AgenteGenetico:
 
         
     #En base a un objeto, genera muchos posibles entornos
-    def generarPoblacion(self, objetos):
-        self.poblacion_inicial = 40
+    def generarPoblacion(self):
+        self.poblacion_inicial = 1280
         population = []
 
         lista = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9]
-        # posibles_z = []
-        # for i in range(len(objetos)):
-        #     val = objetos[i].z + objetos[i].alto/2
-        #     posibles_z.append(val)
 
         valores_validos = []
         while len(population) < self.poblacion_inicial:
@@ -224,9 +220,9 @@ class AgenteGenetico:
         
         
     # Resuelve toda la logica del algoritmo genetico, aca deberia ir todo el codigo llamadp
-    def startGenetico(self, objetos):
+    def startGenetico(self):
         #Nueva poblacion
-        self.generarPoblacion(objetos)
+        self.generarPoblacion()
         
         # Iteramos hasta que se cumpla el numero de intentos
         for i in range(self.maxTryStates):

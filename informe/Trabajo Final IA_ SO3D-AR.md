@@ -270,14 +270,29 @@ Con respecto a la métrica de cuantas veces el algoritmo coloca al objeto en alg
 
 
 
-|**Cantidad de generaciones**|**Tamaño de la población inicial**|**Valor promedio del mejor resultado**|**Precisión con respecto al mejor resultado**|
-| - | - | - | - |
-|1|5|61,690723|92,01116083|
-|2|10|64,54670328|96,27082983|
-|4|20|66,60962424|99,34765797|
-|8|40|67,047|100|
+|**Cantidad de generaciones**|**Tamaño de la población inicial**|**Valor promedio del mejor resultado**|**Precisión con respecto al mejor resultado**|**Tiempo de ejecucion promedio en segundos**|
+| - | - | - | - | - |
+|1|5|61,690723|92,01116083|0,0200014114|
+|2|10|64,54670328|96,27082983|0,0199897289|
+|4|20|66,60962424|99,34765797|0,0939991474|
+|8|40|67,047|100|0,2339982986|
+|16|80|67,047|100|0,9073073864|
+|32|160|67,047|100|3,5376996994|
+|64|320|67,047|100|13,1208972931|
+|128|640|67,047|100|51,9326932430|
+|256|1280|67,047|100|213,0451185703|
 
 Tabla 1. Resultados de la colocación en las mejores posiciones.
+
+Grafico de la relacion Cantidad de generaciones/Tiempo
+
+![](cantidad_de_generaciones_tiempo.jpg)
+
+
+Grafico de la relacion Tamaño de la poblacion inicial/Tiempo
+
+![](tamaño_de_la_poblacion_inicial_tiempo.jpg)
+
 
 En la tabla 1 se puede observar que con una pequeña cantidad de iteraciones y muy pocos valores iniciales, el algoritmo es capaz de obtener más del 90% de precisión en sus resultados a la hora de colocar los objetos.
 
