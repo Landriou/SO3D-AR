@@ -5,9 +5,6 @@ El genoma que construimos esta conformado por las siguientes características:
 Posición con respecto al eje X
 Posición con respecto al eje Y
 Posición con respecto al eje Z
-Rotación con respecto al eje X
-Rotación con respecto al eje Y
-Rotación con respecto al eje Z
 Alto
 Ancho
 Profundidad
