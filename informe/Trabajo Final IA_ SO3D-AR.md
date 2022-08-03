@@ -142,7 +142,7 @@ La función fitness es un pilar fundamental del funcionamiento de nuestro algori
 - Mientras más distancia haya frente a otro objeto desde arriba mejor
 
 
-Estos criterios implican que se debía calcular con un algoritmo cada una de las situaciones, para calcular la superficie de donde esta apoyado el objeto, lo que se hizo fue recorrer los puntos donde estaba apoyado el objeto desde el punto central de la base, luego se sumaron estos 4 números(cada recorrido en las 4 direcciones) para finalmente obtener el tamaño de la superficie.
+Estos criterios implican que se debía calcular con un algoritmo cada una de las situaciones, para calcular la superficie de donde esta apoyado el objeto, lo que se hizo fue recorrer los puntos donde estaba apoyado el objeto desde el punto central de la base, esto se explica con mas detalle en la siguiente seccion.
 
 Para las distancias de los objetos de frente y arriba lo que se hizo es cortar con un plano al objeto desde el centro(plano paralelo al XY para la distancia horizontal y plano paralelo al YZ para la vertical), dentro de este plano se buscaba el punto de colisión más próximo al objeto y se calculó la distancia desde ese punto hasta el centro.
 
