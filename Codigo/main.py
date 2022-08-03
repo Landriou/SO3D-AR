@@ -28,23 +28,12 @@ obje10= Objeto(2,4,7.5,1,1,1,(0,0,0))
 
 objetos = [obje1, obje2, obje3, obje4, obje5, obje6, obje7, obje8, obje9, obje10]
 ent = Entorno()
-# ent.objetos = objetos
-# ent.objetosAlEspacio(objetos)
+ent.objetos = objetos
+ent.objetosAlEspacio(objetos)
 
+objeto_test = Objeto(7,6.5,5.5,1,1,1,(5,5,5))
 
-objeto_test = Objeto(2,4,9,1,1,1,(5,5,5))
-
-ent.objetos = [objeto_test]
-#ent.iniciar()
-
-ent.objetos.append(Objeto(7,9,2,1,1,1,(5,5,5)))
-
-agente = AgenteGenetico(2,ent,Objeto(0,0,0,1,1,1,(5,5,5)))
-hijo1, hijo2 = agente.cruzamiento(ent.objetos[0],ent.objetos[1])	
-
-ent.objetos.append(Objeto(hijo1.x ,hijo1.y, hijo1.z,1,1,1,(5,5,5)))
-ent.objetos.append(Objeto(hijo2.x ,hijo2.y, hijo2.z,1,1,1,(5,5,5)))
-
+ent.objetos.append(objeto_test)
 ent.iniciar()
 
 

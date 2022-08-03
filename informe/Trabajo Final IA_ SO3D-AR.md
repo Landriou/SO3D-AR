@@ -48,6 +48,33 @@ padres, de los cuales de forma aleatoria, se obtienen a los hijos. Este método 
 
 Por otro lado, Multi-Point Crossover cumple con todas las necesidades que nos planteamos a la hora de cruzar padres y generar los hijos, ya que al realizar múltiples cortes y hacer los cruzamientos, esto se puede interpretar como un objeto que cambia su posición en un espacio 3d, variando su posición relativa en el espacio, todo esto considerando que los genes representan diferentes características del objeto a colocar en el espacio.
 
+##### Detalle sobre la poblacion inicial
+
+La poblacion inicial se genera aleatoriamente en base a una funcion. Los individuos generados parten de una base, deben asemejarse a las caracteristicas "fisicas" del objeto que se quiere colocar inicialmente en el espacio, ¿que significa esto?.
+
+Como se explico, los individuos estan compuestos por variables que determinan su posicion en el espacio (X,Y,Z) y variables que determinan sus caracterisitcas (alto, ancho, largo). Estas ultimas son copiadas por los individuos generados aleatoriamente, lo unico que se "randomiza" son sus variables con relacion a la poscion con los ejes coordenados, la cual puede varias del 0 al 9, aumentando de a 0,5.
+
+Una vez se genera un individio, se procede a validar al mismo. Se debe checkear que no este dentro de otro objeto en el espacio y que, ademas, tenga una base en la cual apoyarse por completo, no se aceptan objetos con partes suspendidas en el aire.
+
+En el siguiente ejemplo, los objetos azules son los correspondientes al entorno, colocados previamente. El cubo verde sera la demostracion del objeto generado aleatoria mente, el cual ira variando para cada ejemplo correspondiente.
+
+###### Casos de ejemplos aleatorios
+
+![](objeto-aleatorio-invalido-flotando.jpg)
+
+Este ejemplo, el individuo generado para la poblacion inical, pasaria la primera validacion, ya que no se encuentra dentro ni colicionado con ningun objeto del espacio, pero seria descartado posteriormente ya que no se encuentra sobre ninguna base.
+
+
+![](objeto-aleatorio-invalido-colision.jpg)
+
+En este caso, el objeto no pasaria ninguna de las validaciones ya que se encuentra colisionando con un objeto del entorno y a su vez no cuenta con una base solida.
+
+![](objeto-aleatorio-valido.jpg)
+
+En este ultimo caso, el objeto pasaria todas las validaciones ys eria tomado como un elemento de la poblacion incial.
+
+Con los ejemplos anteriores, se intenta aclarar el proceso por el cual el algoritmo pasa en una primera instancia, el mismo debe lograr generar el numero de casos iniciales validos solicitados, para posteriormente pasar a realizar los cruzamientos propios del algoritmo genetico, haciendo que los individuos generados se crucen, intercambiando los valores de sus variables relacionadas a la posicion en el espacio.
+
 ##### Detalle sobre el cruzamiento
 
 La estructura genetica que se propuso para los individuos en este trabajo gue la siguiente:

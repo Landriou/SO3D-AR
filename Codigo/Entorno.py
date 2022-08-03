@@ -20,7 +20,7 @@ class Entorno:
         for i in range(len(self.objetos)):
             color = 'b' if i % 2 == 0 else 'b'
             if i == len(self.objetos) - 1:
-                color = 'b'
+                color = 'g'
             graficador.graficar(self.objetos[i], color)
         graficador.show()
         
