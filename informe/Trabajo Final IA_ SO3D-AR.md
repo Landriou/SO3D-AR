@@ -107,7 +107,11 @@ Para realizarlo, se necesitan 2 individuos previamente generados:
 
 Con estra sencilla demostracion, se puede ver claramente los dos individuos (cubos azules) previos al cruzamiento y luego, los mismos individuos y los hijos resultantes del cruzamiento (cubos verdes).
 
-Con este ejempplo, se puede ver claramente como el cruzamiento, en este caso, se dio entre entre el par coordenado (X,Z), esto quiere decir, que cada hijo conservo la posicion en el eje Y del padre principal del cual se copio, pero sus coordenadas X Z fueron una combinacion aleatoria de la de sus progenitores. Como el cruzamiento se da de forma aleatoria, el par ordenado podria haber sido cualquier otra de las posibles combinaciones. Luego de eso, los individuos resultantes pasarian a una instancia de posible mutacion y luego se les harian las validaciones pertinentes para determinar si son o no aptos.
+Esta seria una representacion a nivel de codigo del resultado que se mostro grafiacamente en las imagenes anteriores 
+
+![](ejemplo-cruzamiento.jpg)
+
+Con este ejemplo, se puede ver claramente como el cruzamiento, en este caso, se dio entre entre el par coordenado (X,Z), esto quiere decir, que cada hijo conservo la posicion en el eje Y del padre principal del cual se copio, pero sus coordenadas X Z fueron una combinacion aleatoria de la de sus progenitores. Como el cruzamiento se da de forma aleatoria, el par ordenado podria haber sido cualquier otra de las posibles combinaciones. Luego de eso, los individuos resultantes pasarian a una instancia de posible mutacion y luego se les harian las validaciones pertinentes para determinar si son o no aptos.
 
 
 Una vez resuelta la técnica de cruzamiento a utilizar nos quedaba determinar las validaciones de que objetos colocados en el espacio considerábamos correctos, cómo calculamos su fitness y al final poner todo en funcionamiento en el algoritmo genético.

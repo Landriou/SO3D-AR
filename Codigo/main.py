@@ -31,7 +31,14 @@ ent = Entorno()
 ent.objetos = objetos
 ent.objetosAlEspacio(objetos)
 
-objeto_test = Objeto(7,6.5,5.5,1,1,1,(5,5,5))
+ind1 = Objeto(7, 6.5, 5.5 ,1,1,1,(5,5,5))
+ind2 = Objeto(3, 4, 6, 1,1,1,(5,5,5))
+## Proceso de cruzamiento
+
+## Resultado de cruzamiento
+hijo1 = Objeto(3, 6.5, 1 ,1,1,1,(5,5,5))
+hijo2 = Objeto(7, 4, 6, 5.5 ,1,1,(5,5,5))
+
 
 ent.objetos.append(objeto_test)
 ent.iniciar()
