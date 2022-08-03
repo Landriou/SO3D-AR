@@ -231,6 +231,7 @@ Con respecto a la métrica de cuantas veces el algoritmo coloca al objeto en alg
 |2|10|64,54670328|96,27082983|
 |4|20|66,60962424|99,34765797|
 |8|40|67,047|100|
+
 Tabla 1. Resultados de la colocación en las mejores posiciones.
 
 En la tabla 1 se puede observar que con una pequeña cantidad de iteraciones y muy pocos valores iniciales, el algoritmo es capaz de obtener más del 90% de precisión en sus resultados a la hora de colocar los objetos.
