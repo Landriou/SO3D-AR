@@ -225,17 +225,25 @@ Con respecto a la métrica de cuantas veces el algoritmo coloca al objeto en alg
 
 
 
-|**Cantidad**|**de**|**Tamaño de**|**la**|**Valor promedio del**|**Precisión con**|
-| - | - | - | - | - | - |
-|**generaciones**||**población inicial**||**mejor resultado**|**respecto al mejor**|
-||||||**resultado**|
-|1||5||61,690723|92,01116083|
-|2||10||64,54670328|96,27082983|
-|4||20||66,60962424|99,34765797|
-|8||40||67,047|100|
+|**Cantidad de generaciones**|**Tamaño de la población inicial**|**Valor promedio del mejor resultado**|**Precisión con respecto al mejor resultado**|
+| - | - | - | - |
+|1|5|61,690723|92,01116083|
+|2|10|64,54670328|96,27082983|
+|4|20|66,60962424|99,34765797|
+|8|40|67,047|100|
 Tabla 1. Resultados de la colocación en las mejores posiciones.
 
 En la tabla 1 se puede observar que con una pequeña cantidad de iteraciones y muy pocos valores iniciales, el algoritmo es capaz de obtener más del 90% de precisión en sus resultados a la hora de colocar los objetos.
+
+Para tener una comparativa de estos resultados, la siguiente tabla representa el valor promedio de un grupo de individuos generados de forma aleatoria, que cumplen con las condiciones necesarias para formar parte de la poblacion inicial.
+
+|**Cantidad de individuos**|**Valor promedio del fitness de los individuos**|**Precisión con respecto al mejor resultado**|
+| - | - | - |
+|100|43,8268|65,36728265|
+
+
+Con esto se puede ver, que las condiciones iniciales son tan fuertes y excluyentes que, incluso utilizando una generacion aleatoria de individuos, la presicion promedio es superior al 65% con respecto al mejor caso
+
 
 4. **Conclusión**
 
