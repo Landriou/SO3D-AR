@@ -8,21 +8,19 @@
 
 29 de Julio de 2022 Facultad de ingeniería![](Aspose.Words.faafeb33-82a7-4691-b29e-aca02c801f7c.002.png)
 
-1. **Introducción**
+# 1. **Introducción**
 
 En el presente informe se hará un análisis del algoritmo realizado para el trabajo final de la cátedra Inteligencia Artificial I, este algoritmo trata de resolver la problemática de la colocación de un objeto en un espacio 3D con obstáculos, es decir, contesta la pregunta de cuál es la mejor posición para colocarlo dada una serie de parámetros.
 
-El algoritmo fue hecho con un algoritmo genético, que usa un cruzamiento multipunto
+Ademas, se explicaran detalladamente las caracteristicas del algoritmo genetico construido para resolver el problema, es decir, el cruzamiento utilizado, como se diseño la funcion fitness y como se aplicaron las validaciones correspondientes. Despues se analizarán métricas de evaluacién del funcionamiento del algoritmo, con diferentes parametros, variando, por ejemplo, cantidad de poblaciones iniciales, diferentes ponderaciones a la función fitness o comparaciones contra ejecuciones de algoritmos mas simples, como un algoritmo aleatorio.
 
-2. **Marco teórico**
+# 2. **Marco teórico**
 
 Antes de empezar a explicar los resultados, es necesario explicar cómo llegamos a plantear la solución que le dimos al problema, también la investigación previa que hicimos.
 
 Comenzamos investigando un poco el problema de la colocación de objetos en espacios 3D, nos dimos cuenta que nuestro planteamiento inicial de resolver el problema mediante un algoritmo genético era correcto, puesto que, la mayoría de las implementaciones de internet eran soluciones a través de este tipo de algoritmos y CSP, y además, como es un problema de optimización va muy bien con la esencia de los algoritmos genéticos.
 
-De todas las investigaciones que hicimos, hubo un paper que más destaco [1], este paper ordena objetos en un espacio vacío en base a las descripciones en lenguaje natural que se les daba, por ejemplo, “un espacio con 5 sillas, una mesa y un mueble” y el
-
-programa ordenaba el espacio de tal forma de cumplir las instrucciones en lenguaje natural.
+De todas las investigaciones que hicimos, hubo un paper que más destaco [1], este paper ordena objetos en un espacio vacío en base a las descripciones en lenguaje natural que se les daba, por ejemplo, “un espacio con 5 sillas, una mesa y un mueble” y el programa ordenaba el espacio de tal forma de cumplir las instrucciones en lenguaje natural.
 
 A través de este paper se nos dieron indicios muy claro de cómo deberíamos tratar a los objetos en el espacio 3D respecto a sus características, colocaciones e interacciones, analizamos como hacía uso de CSP para las validaciones de los objetos correctos y también vimos con detenimiento la técnica de cruzamiento que empleaba.
 
@@ -40,9 +38,7 @@ Las demás técnicas de cruzamiento fueron descartadas ya que no resultaban tan 
 
 A la hora de tomar la decisión, los dos candidatos finales fueron Blend Crossover y Multi-Point Crossover.
 
-Blend Crossover, mediante una fórmula matemática, determina un rango entre los
-
-padres, de los cuales de forma aleatoria, se obtienen a los hijos. Este método nos resultó bastante interesante y con una característica particular, de a poco va atendiendo a los casos con mejor fitness. Pero terminó siendo descartado, ya que con una investigación posterior, se encontró que puede ser más fácil que dicha tendencia termine cayendo en un óptimo local.
+Blend Crossover, mediante una fórmula matemática, determina un rango entre los padres, de los cuales de forma aleatoria, se obtienen a los hijos. Este método nos resultó bastante interesante y con una característica particular, de a poco va atendiendo a los casos con mejor fitness. Pero terminó siendo descartado, ya que con una investigación posterior, se encontró que puede ser más fácil que dicha tendencia termine cayendo en un óptimo local.
 
 Por otro lado, Multi-Point Crossover cumple con todas las necesidades que nos planteamos a la hora de cruzar padres y generar los hijos, ya que al realizar múltiples cortes y hacer los cruzamientos, esto se puede interpretar como un objeto que cambia su posición en un espacio 3d, variando su posición relativa en el espacio, todo esto considerando que los genes representan diferentes características del objeto a colocar en el espacio.
 
@@ -212,14 +208,14 @@ Después de cruzar, se procede a ordenar la población por el fitness que tienen
 
 A medida que pasan las iteraciones el algoritmo va convergiendo a solución, como vamos a ver las siguientes secciones.
 
-3. **Diseño Experimental**
-1. Qué métricas vamos a esperar
+# 3. **Diseño Experimental**
+## 3.1  Qué métricas vamos a esperar
 
 Respecto al diseño experimental, establecimos métricas de evaluación del algoritmo según el fitness, es decir, medimos el funcionamiento del algoritmo en base a que los fitness de la población inicial mejoren sustancialmente frente al individuo con mejor fitness, para esto presentaremos una serie de métricas de los fitness juntos a sus gráficos correspondientes.
 
 La segunda métrica del funcionamiento del algoritmo es que tantas veces el objeto cae entre los mejores lugares en un entorno estático(el que vimos en la figura 1).
 
-2. Resultado y análisis  de las métricas.
+## 3.2 Resultado y análisis  de las métricas.
 
 Como primera medición del comportamiento del algoritmo, se tomó de base el fitness de los casos utilizados como “población inicial”, teniendo en cuenta las condiciones antes mencionadas.
 
@@ -306,7 +302,7 @@ Para tener una comparativa de estos resultados, la siguiente tabla representa el
 Con esto se puede ver, que las condiciones iniciales son tan fuertes y excluyentes que, incluso utilizando una generacion aleatoria de individuos, la presicion promedio es superior al 65% con respecto al mejor caso
 
 
-4. **Conclusión**
+# 4. **Conclusión**
 
 Después de todo este análisis y comparación de diferentes casos de prueba y resultados similares, se tuvo que analizar el comportamiento del algoritmo, ya que los resultados son altamente precisos si se tiene en cuenta las pésimas condiciones iniciales con las que se ejecuta, ya que en casi todas las pruebas, el algoritmo obtiene más de un 90% de efectividad, sean cuales sean las condiciones iniciales.
 
@@ -318,6 +314,6 @@ El comportamiento del algoritmo y su lógica, es tan específica y los casos que
 
 Teniendo esto en cuenta, pasa a tener sentido la velocidad con la que el algoritmo tiende a un máximo local o al propio máximo global.
 
-5. **Fuentes**
+# 5. **Referencias**
 
 [1] Stéphane Sanchez (2013). Constraint-Based 3D-Object Layout using a Genetic Algorithm. [Constraint-Based 3D-Object Layout using a Genetic Algorithm](https://www.researchgate.net/publication/245776169_Constraint-based_3d-object_layout_using_a_genetic_algorithm)
