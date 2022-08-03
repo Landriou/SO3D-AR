@@ -24,7 +24,7 @@ De todas las investigaciones que hicimos, hubo un paper que más destaco [1], es
 
 A través de este paper se nos dieron indicios muy claro de cómo deberíamos tratar a los objetos en el espacio 3D respecto a sus características, colocaciones e interacciones, analizamos como hacía uso de CSP para las validaciones de los objetos correctos y también vimos con detenimiento la técnica de cruzamiento que empleaba.
 
-1. Cruzamiento y mutaciones
+## 2.1 Cruzamiento y mutaciones
 
 Esto nos llevó a analizar las posibles técnicas de cruzamiento de los algoritmos genéticos para elegir la adecuada entre los 4 principales algoritmos de cruzamiento encontrados: Single-Point Crossover, Multi-Point Crossover, Linear Crossover, Blend crossover, Simulated binary crossover
 
@@ -42,7 +42,7 @@ Blend Crossover, mediante una fórmula matemática, determina un rango entre los
 
 Por otro lado, Multi-Point Crossover cumple con todas las necesidades que nos planteamos a la hora de cruzar padres y generar los hijos, ya que al realizar múltiples cortes y hacer los cruzamientos, esto se puede interpretar como un objeto que cambia su posición en un espacio 3d, variando su posición relativa en el espacio, todo esto considerando que los genes representan diferentes características del objeto a colocar en el espacio.
 
-##### Detalle sobre la poblacion inicial
+## 2.2 Detalle sobre la poblacion inicial
 
 La poblacion inicial se genera aleatoriamente en base a una funcion. Los individuos generados parten de una base, deben asemejarse a las caracteristicas "fisicas" del objeto que se quiere colocar inicialmente en el espacio, ¿que significa esto?.
 
@@ -52,7 +52,7 @@ Una vez se genera un individio, se procede a validar al mismo. Se debe checkear 
 
 En el siguiente ejemplo, los objetos azules son los correspondientes al entorno, colocados previamente. El cubo verde sera la demostracion del objeto generado aleatoria mente, el cual ira variando para cada ejemplo correspondiente.
 
-###### Casos de ejemplos aleatorios
+## 2.3 Casos de ejemplos aleatorios
 
 ![](objeto-aleatorio-invalido-flotando.jpg)
 
@@ -69,7 +69,7 @@ En este ultimo caso, el objeto pasaria todas las validaciones ys eria tomado com
 
 Con los ejemplos anteriores, se intenta aclarar el proceso por el cual el algoritmo pasa en una primera instancia, el mismo debe lograr generar el numero de casos iniciales validos solicitados, para posteriormente pasar a realizar los cruzamientos propios del algoritmo genetico, haciendo que los individuos generados se crucen, intercambiando los valores de sus variables relacionadas a la posicion en el espacio.
 
-##### Detalle sobre el cruzamiento
+## 2.4 Detalle sobre el cruzamiento
 
 La estructura genetica que se propuso para los individuos en este trabajo gue la siguiente:
 
@@ -110,7 +110,7 @@ Con este ejemplo, se puede ver claramente como el cruzamiento, en este caso, se 
 
 Una vez resuelta la técnica de cruzamiento a utilizar nos quedaba determinar las validaciones de que objetos colocados en el espacio considerábamos correctos, cómo calculamos su fitness y al final poner todo en funcionamiento en el algoritmo genético.
 
-2. Validaciones en el espacio
+## 2.5 Validaciones en el espacio
 
 Dentro de lo que es validaciones en el espacio, definimos las siguientes reglas:
 
@@ -128,7 +128,7 @@ Con estas 2 validaciones se cumplían las 5 reglas planteadas al principio de es
 
 Figura 1. Entorno estático de pruebas.
 
-3. Función Fitness
+## 2.6 Función Fitness
 
 La función fitness es un pilar fundamental del funcionamiento de nuestro algoritmo, esta función diferencia a un genoma bueno de un genoma malo, es decir de una mejor solución que otra. El fitness de un objeto en este algoritmo es calculado bajo los siguientes criterios:
 
@@ -144,7 +144,7 @@ Para las distancias de los objetos de frente y arriba lo que se hizo es cortar c
 
 En el cuarto criterio se especificó un punto en la inicialización del objeto, el objeto suma fitness en base a la distancia de este punto, eso es similar a una condición en la cual existe una persona que hace de observador, y el objeto debería estar lo más cercano al punto posible, siempre y cuando con comprometa una mejor posición del objeto, por eso todos estos criterios son ponderaciones.
 
-###### Detalle de la implementacion de la funcion fitness
+## 2.7 Detalle de la implementacion de la funcion fitness
 
 Para la construcción de la funcion fitness se tuvieron en cuenta las criterios anteriores y se ponderó de la siguiente manera:
 
@@ -190,13 +190,13 @@ Se observa que en la formula se le agrega una multiplicacion 100 y una division 
 Finalmente, una vez obtenidas las 4 metricas de fitness se suma todo el fitness en una sola variable, excepto por la distancia del punto dado ya que es necesario que esta metrica se reste en vez de sumar, porque el fitness deberia aumentar mientras menos distancia haya hacia el punto dado.
 
 
-4. Entorno y Visualización.
+## 2.8 Entorno y Visualización.
 
 Como se vio en la Figura 1, tenemos un entorno gráfico en el cual mostramos los resultados, este entorno gráfico lo mostramos usando la librería de python Matplotlib, a través de esta librería podemos dibujar vectores en el espacio, a cada objeto, calculamos sus respectivos vectores que son sus aristas y luegos los graficamos.
 
 Al momento de ejecutar el algoritmo, todos estos objetos se dibujan en un espacio 3D de forma sólida, es decir, que en base a sus dimensiones se van marcando las posiciones de la matriz 3D con una marca de ocupado.
 
-5. Diseño del algoritmo genético.
+## 2.9 Diseño del algoritmo genético.
 
 Una vez construido todo el marco teórico del proyecto, así como también las capacidades de calcular fitness, validar las posiciones, cruzamientos/mutaciones y la visualización de los resultados, solo quedó unir las piezas para hacer funcionar el algoritmo.
 
